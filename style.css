@@ -1,4 +1,6 @@
-/* Variáveis de Cores do Tema Claro */
+/* ==========================================================================
+   PALETA DE CORES (Tema Claro por Padrão)
+   ========================================================================== */
 :root {
     --bg-color: #f8f9fa;
     --card-bg: #ffffff;
@@ -8,7 +10,9 @@
     --border-color: #dee2e6;
 }
 
-/* Variáveis de Cores do Tema Escuro */
+/* ==========================================================================
+   PALETA DE CORES (Tema Escuro - Ativado via JavaScript)
+   ========================================================================== */
 [data-theme="dark"] {
     --bg-color: #121212;
     --card-bg: #1e1e1e;
@@ -18,9 +22,11 @@
     --border-color: #444444;
 }
 
-/* Estilização Base */
+/* ==========================================================================
+   ESTRUTURA GERAL DA PÁGINA
+   ========================================================================== */
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -29,7 +35,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Topo do Site */
+/* Cabeçalho do Site */
 header {
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border-color);
@@ -47,112 +53,13 @@ header h1 {
     color: var(--primary-color);
 }
 
-/* Botão de Alternar Tema */
+/* Botão de Alternar o Modo Escuro */
 .btn-toggle {
     background-color: var(--primary-color);
-    color: white;
+    color: #ffffff;
     border: none;
     padding: 8px 16px;
     border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-toggle:hover {
-    background-color: var(--primary-hover);
-}
-
-/* Layout Principal */
-main {
-    max-width: 840px;
-    margin: 30px auto;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-/* Blocos de Conteúdo */
-section {
-    background-color: var(--card-bg);
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    margin-bottom: 25px;
-}
-
-h2 {
-    color: var(--primary-color);
-    margin-top: 0;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-h3 {
-    margin: 20px 0 5px 0;
-    color: var(--primary-color);
-}
-
-/* Correção Crítica do Formulário (Alinhamento Vertical) */
-fieldset {
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 20px;
-    background-color: var(--bg-color);
-}
-
-legend {
-    font-weight: bold;
-    padding: 0 10px;
-}
-
-/* Faz com que cada opção ocupe uma linha inteira e alinhe o botão de rádio perfeitamente */
-.option-container {
-    display: flex;
-    align-items: flex-start;
-    margin: 15px 0;
-    cursor: pointer;
-}
-
-.option-container input {
-    margin-right: 12px;
-    margin-top: 5px;
-}
-
-/* Botão Verde de Validar */
-.btn-submit {
-    background-color: #198754;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 15px;
-    width: 100%;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-submit:hover {
-    background-color: #157347;
-}
-
-/* Caixa de Resultado (Inicia Oculta) */
-#resultado-quiz {
-    margin-top: 20px;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 6px;
-    display: none;
-    border: 1px solid transparent;
-}
-
-/* Rodapé */
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border-color);
-    margin-top: 50px;
-    opacity: 0.7;
-}
+    transition
