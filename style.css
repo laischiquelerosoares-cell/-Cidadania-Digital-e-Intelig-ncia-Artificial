@@ -1,232 +1,161 @@
-/* ==========================================================================
-   Variáveis de Cores e Configurações Gerais
-   ========================================================================== */
+/* Variáveis de Cores (Paleta de cores moderna) */
 :root {
-    --bg-primary: #f4f7f6;
-    --bg-card: #ffffff;
-    --text-main: #2c3e50;
-    --text-muted: #5a6b7c;
-    --accent-color: #3498db;
-    --accent-hover: #2980b9;
-    --success-color: #2ecc71;
-    --error-color: #e74c3c;
-    --border-color: #e2e8f0;
-    --transition-smooth: all 0.3s ease;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #212529;
+    --primary-color: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --border-color: #dee2e6;
 }
 
-/* Variáveis para o Modo Escuro */
+/* Quando o HTML tiver o atributo data-theme="dark", estas cores serão aplicadas */
 [data-theme="dark"] {
-    --bg-primary: #121212;
-    --bg-card: #1e1e1e;
-    --text-main: #f5f6fa;
-    --text-muted: #b2bec3;
-    --accent-color: #9b59b6;
-    --accent-hover: #8e44ad;
-    --border-color: #2d3436;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --primary-color: #375a7f;
+    --primary-hover: #2b4764;
+    --border-color: #444444;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Configurações Gerais da Página */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
-    transition: var(--transition-smooth);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* ==========================================================================
-   Layout do Cabeçalho e Rodapé
-   ========================================================================== */
-.main-header {
-    background-color: var(--bg-card);
-    padding: 1.5rem 2rem;
+/* Cabeçalho superior */
+header {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--border-color);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.logo h1 {
-    font-size: 1.5rem;
-}
-
-.logo span {
-    color: var(--accent-color);
-}
-
-.btn-accessibility {
-    background-color: var(--accent-color);
-    color: #ffffff;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transition-smooth);
-}
-
-.btn-accessibility:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-}
-
-.main-footer {
-    background-color: var(--bg-card);
-    text-align: center;
-    padding: 2rem;
-    margin-top: 3rem;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-/* ==========================================================================
-   Seções de Conteúdo e Flexbox
-   ========================================================================== */
-main {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 2rem 1rem;
 }
 
+h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+/* Botão de Alternar Modo Escuro */
+.btn-toggle {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-toggle:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Conteúdo centralizado */
+main {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Blocos / Secções de conteúdo */
 section {
-    background-color: var(--bg-card);
-    padding: 2.5rem;
-    margin-bottom: 2rem;
+    background-color: var(--card-bg);
+    padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    transition: var(--transition-smooth);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
 }
 
 h2 {
-    margin-bottom: 1rem;
-    color: var(--accent-color);
+    color: var(--primary-color);
+    margin-top: 0;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
 }
 
-.hero-section p {
-    font-size: 1.15rem;
-    color: var(--text-muted);
+h3 {
+    margin-bottom: 5px;
+    color: var(--text-color);
 }
 
-/* Cards com Flexbox */
-.cards-container {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.card {
-    flex: 1;
-    background-color: var(--bg-primary);
-    padding: 1.5rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    transition: var(--transition-smooth);
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.card h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
-/* ==========================================================================
-   Formulários e Elementos do Quiz
-   ========================================================================== */
-#quiz-form fieldset {
-    border: none;
-    margin: 1.5rem 0;
-}
-
-#quiz-form legend {
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.radio-label {
-    display: block;
-    background-color: var(--bg-primary);
-    padding: 1rem;
-    margin-bottom: 0.8rem;
-    border-radius: 6px;
-    cursor: pointer;
-    border: 1px solid var(--border-color);
-    transition: var(--transition-smooth);
-}
-
-.radio-label:hover {
-    background-color: var(--border-color);
-}
-
-.radio-label input {
-    margin-right: 0.8rem;
-}
-
-.btn-submit {
-    background-color: var(--success-color);
-    color: #ffffff;
-    border: none;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-}
-
-.btn-submit:hover {
+p {
+    margin-top: 5px;
+    margin-bottom: 15px;
     opacity: 0.9;
 }
 
-/* Caixas de Feedback Dinâmico */
-.feedback-box {
-    margin-top: 1.5rem;
-    padding: 1rem;
+/* Estilização do Quiz (Formulário) */
+fieldset {
+    border: 1px solid var(--border-color);
     border-radius: 6px;
-    font-weight: 600;
+    padding: 20px;
+    background-color: var(--bg-color);
 }
 
-.feedback-box.success {
-    background-color: rgba(46, 204, 113, 0.2);
-    color: #27ae60;
-    border: 1px solid var(--success-color);
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+    margin-bottom: 15px;
 }
 
-.feedback-box.error {
-    background-color: rgba(231, 76, 60, 0.2);
-    color: #c0392b;
-    border: 1px solid var(--error-color);
+/* Alinha o rádio button ao texto na vertical e quebra linha para cada opção */
+.option-container {
+    display: block; /* Garante que uma opção fique abaixo da outra */
+    margin-bottom: 15px;
+    cursor: pointer;
 }
 
-.hidden {
-    display: none;
+.option-container input {
+    margin-right: 10px;
 }
 
-/* ==========================================================================
-   Media Queries (Responsividade para Celulares)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .main-header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
+/* Botão Enviar / Verificar */
+.btn-submit {
+    background-color: #198754;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
 
-    .cards-container {
-        flex-direction: column;
-    }
+.btn-submit:hover {
+    background-color: #157347;
+}
 
-    section {
-        padding: 1.5rem;
-    }
+/* Caixa onde aparece o feedback do quiz */
+#resultado-quiz {
+    margin-top: 15px;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 4px;
+    display: none; /* Começa escondido */
+}
+
+/* Rodapé do Site */
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 50px;
+    opacity: 0.7;
 }
