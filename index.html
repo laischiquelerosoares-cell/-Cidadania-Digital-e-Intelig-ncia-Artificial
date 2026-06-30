@@ -6,7 +6,7 @@
     <title>Cidadania Digital - IA e Deepfakes</title>
     <style>
         /* ==========================================
-           ESTILOS VISUAIS (CSS)
+           CÓDIGO CSS (DESIGN E CORES DO SITE)
            ========================================== */
         :root {
             --bg-color: #f8f9fa;
@@ -107,7 +107,7 @@
             padding: 0 10px;
         }
 
-        /* CORREÇÃO DO ALINHAMENTO DO QUIZ */
+        /* CORREÇÃO DO QUIZ: Força cada opção a ficar em uma linha própria */
         .option-container {
             display: flex;
             align-items: flex-start;
@@ -222,7 +222,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Modo Escuro
+            // Alternar Modo Escuro
             const toggleBtn = document.getElementById('toggleTheme');
             toggleBtn.addEventListener('click', () => {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -235,24 +235,24 @@
                 }
             });
 
-            // Validação do Quiz
+            // Validação das respostas do Quiz
             const btnVerificar = document.getElementById('btnVerificar');
             const resultadoDiv = document.getElementById('resultado-quiz');
             
             btnVerificar.addEventListener('click', () => {
                 const opcoes = document.getElementsByName('opcao');
-                let respostaSelecionada = null;
+                let respuestaSelecionada = null;
 
                 for (const opcao of opcoes) {
                     if (opcao.checked) {
-                        respostaSelecionada = opcao.value;
+                        respuestaSelecionada = opcao.value;
                         break;
                     }
                 }
 
                 resultadoDiv.style.display = 'block';
 
-                if (!respostaSelecionada) {
+                if (!respuestaSelecionada) {
                     resultadoDiv.style.backgroundColor = '#fff3cd';
                     resultadoDiv.style.color = '#664d03';
                     resultadoDiv.style.borderColor = '#ffecb5';
