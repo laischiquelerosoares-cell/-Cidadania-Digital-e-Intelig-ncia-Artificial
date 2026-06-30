@@ -4,7 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cidadania Digital - IA e Deepfakes</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================
+           ESTILOS VISUAIS (CSS)
+           ========================================== */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --primary-color: #0d6efd;
+            --primary-hover: #0b5ed7;
+            --border-color: #dee2e6;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --primary-color: #375a7f;
+            --primary-hover: #2b4764;
+            --border-color: #444444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .btn-toggle {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .btn-toggle:hover {
+            background-color: var(--primary-hover);
+        }
+
+        main {
+            max-width: 840px;
+            margin: 30px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 20px 0 5px 0;
+            color: var(--primary-color);
+        }
+
+        fieldset {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            background-color: var(--bg-color);
+        }
+
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+
+        /* CORREÇÃO DO ALINHAMENTO DO QUIZ */
+        .option-container {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .option-container input {
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+
+        .btn-submit {
+            background-color: #198754;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #157347;
+        }
+
+        #resultado-quiz {
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            border: 1px solid transparent;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body>
 
@@ -69,6 +220,56 @@
         <p>Projeto integrado de Educação Digital e IA - Ensino Médio.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Modo Escuro
+            const toggleBtn = document.getElementById('toggleTheme');
+            toggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    toggleBtn.textContent = 'Modo Escuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    toggleBtn.textContent = 'Modo Claro';
+                }
+            });
+
+            // Validação do Quiz
+            const btnVerificar = document.getElementById('btnVerificar');
+            const resultadoDiv = document.getElementById('resultado-quiz');
+            
+            btnVerificar.addEventListener('click', () => {
+                const opcoes = document.getElementsByName('opcao');
+                let respostaSelecionada = null;
+
+                for (const opcao of opcoes) {
+                    if (opcao.checked) {
+                        respostaSelecionada = opcao.value;
+                        break;
+                    }
+                }
+
+                resultadoDiv.style.display = 'block';
+
+                if (!respostaSelecionada) {
+                    resultadoDiv.style.backgroundColor = '#fff3cd';
+                    resultadoDiv.style.color = '#664d03';
+                    resultadoDiv.style.borderColor = '#ffecb5';
+                    resultadoDiv.textContent = '⚠️ Por favor, selecione uma opção antes de verificar!';
+                } else if (respostaSelecionada === 'correta') {
+                    resultadoDiv.style.backgroundColor = '#d1e7dd';
+                    resultadoDiv.style.color = '#0f5132';
+                    resultadoDiv.style.borderColor = '#badbcc';
+                    resultadoDiv.textContent = '✅ Correto! O melhor caminho é não compartilhar e verificar a veracidade em portais de notícias e agências de checagem confiáveis.';
+                } else {
+                    resultadoDiv.style.backgroundColor = '#f8d7da';
+                    resultadoDiv.style.color = '#842029';
+                    resultadoDiv.style.borderColor = '#f5c2c7';
+                    resultadoDiv.textContent = '❌ Incorreto. Compartilhar sem checar espalha desinformação. Vídeos e áudios hoje em dia podem ser gerados facilmente por IA (Deepfakes).';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
