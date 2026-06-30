@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // ==========================================================================
-    // 1. FUNCIONALIDADE DO MODO ESCURO
-    // ==========================================================================
+    // 1. ALTERNAR MODO ESCURO
     const toggleBtn = document.getElementById('toggleTheme');
-    
     toggleBtn.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         if (currentTheme === 'dark') {
@@ -16,9 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ==========================================================================
-    // 2. VALIDAÇÃO DAS RESPOSTAS DO QUIZ
-    // ==========================================================================
+    // 2. VALIDAÇÃO E EXIBIÇÃO DE RESULTADOS DO QUIZ
     const btnVerificar = document.getElementById('btnVerificar');
     const resultadoDiv = document.getElementById('resultado-quiz');
     
@@ -26,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const opcoes = document.getElementsByName('opcao');
         let respostaSelecionada = null;
 
-        // Verifica qual opção o usuário escolheu
         for (const opcao of opcoes) {
             if (opcao.checked) {
                 respostaSelecionada = opcao.value;
@@ -45,21 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
             resultadoDiv.style.backgroundColor = '#d1e7dd';
             resultadoDiv.style.color = '#0f5132';
             resultadoDiv.style.borderColor = '#badbcc';
-            resultadoDiv.textContent = '✅ Correto! O melhor caminho é não compartilhar e pesquisar o assunto em portais de notícias confiáveis e agências de checagem.';
+            resultadoDiv.textContent = '✅ Correto! O melhor caminho é não compartilhar e verificar a veracidade em portais de notícias e agências de checagem confiáveis.';
         } else {
             resultadoDiv.style.backgroundColor = '#f8d7da';
             resultadoDiv.style.color = '#842029';
             resultadoDiv.style.borderColor = '#f5c2c7';
-            resultadoDiv.textContent = '❌ Incorreto. Compartilhar sem checar ajuda a espalhar boatos virtuais. Lembre-se que vídeos e áudios hoje em dia podem ser criados artificialmente (Deepfakes).';
+            resultadoDiv.textContent = '❌ Incorreto. Compartilhar sem checar espalha desinformação. Vídeos e áudios hoje podem ser gerados por Inteligência Artificial (Deepfakes).';
         }
     });
 
-    // ==========================================================================
-    // 3. LÓGICA DO JOGO DA MEMÓRIA
-    // ==========================================================================
+    // 3. LÓGICA COMPLETA DO JOGO DA MEMÓRIA
     const cardsArray = ['🤖', '🤖', '🔒', '🔒', '📱', '📱', '💻', '💻', '🔍', '🔍', '🌐', '🌐', '📡', '📡', '💡', '💡'];
     
-    // Embaralha os elementos da lista aleatoriamente
+    // Embaralha as cartas de forma aleatória
     cardsArray.sort(() => 0.5 - Math.random());
 
     const grid = document.getElementById('grid-memoria');
@@ -68,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lockBoard = false;
     let matchesFound = 0;
 
-    // Cria as cartas dinamicamente dentro do HTML
+    // Gera as cartas visualmente na tela
     cardsArray.forEach((item, index) => {
         const card = document.createElement('div');
         card.classList.add('memory-card');
@@ -105,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         secondCard.classList.add('matched');
         matchesFound += 2;
 
-        // Se encontrar todos os pares
         if (matchesFound === cardsArray.length) {
             document.getElementById('msg-memoria').style.display = 'block';
         }
