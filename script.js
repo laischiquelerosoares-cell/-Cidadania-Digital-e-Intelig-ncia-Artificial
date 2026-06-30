@@ -1,33 +1,29 @@
-// Aguarda que todo o HTML seja carregado antes de executar o script
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- LÓGICA DO MODO ESCURO ---
+    // 1. FUNCIONALIDADE DO MODO ESCURO
     const toggleBtn = document.getElementById('toggleTheme');
     
     toggleBtn.addEventListener('click', () => {
-        // Verifica se o tema atual já é escuro
         const currentTheme = document.documentElement.getAttribute('data-theme');
         
         if (currentTheme === 'dark') {
-            // Se for escuro, remove o atributo voltando ao modo claro
             document.documentElement.removeAttribute('data-theme');
             toggleBtn.textContent = 'Modo Escuro';
         } else {
-            // Se for claro, adiciona o atributo mudando para o modo escuro
             document.documentElement.setAttribute('data-theme', 'dark');
             toggleBtn.textContent = 'Modo Claro';
         }
     });
 
-
-    // --- LÓGICA DE VALIDAÇÃO DO QUIZ ---
+    // 2. FUNCIONALIDADE DE VALIDAÇÃO DO QUIZ
     const btnVerificar = document.getElementById('btnVerificar');
+    const resultadoDiv = document.getElementById('resultado-quiz');
     
     btnVerificar.addEventListener('click', () => {
         const opcoes = document.getElementsByName('opcao');
         let respostaSelecionada = null;
 
-        // Procura qual das opções (radio buttons) foi marcada pelo utilizador
+        // Procura qual opção foi marcada
         for (const opcao of opcoes) {
             if (opcao.checked) {
                 respostaSelecionada = opcao.value;
@@ -35,27 +31,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        const resultadoDiv = document.getElementById('resultado-quiz');
-        resultadoDiv.style.display = 'block'; // Torna a caixa de resultado visível
+        // Mostra a caixinha de feedback na tela
+        resultadoDiv.style.display = 'block';
 
-        // Se o utilizador clicar sem selecionar nada
+        // Validações de resposta
         if (!respostaSelecionada) {
             resultadoDiv.style.backgroundColor = '#fff3cd';
             resultadoDiv.style.color = '#664d03';
-            resultadoDiv.textContent = 'Por favor, selecione uma opção antes de verificar!';
+            resultadoDiv.style.borderColor = '#ffecb5';
+            resultadoDiv.textContent = '⚠️ Por favor, selecione uma opção antes de verificar!';
         } 
-        // Se selecionar a opção correta
         else if (respostaSelecionada === 'correta') {
             resultadoDiv.style.backgroundColor = '#d1e7dd';
             resultadoDiv.style.color = '#0f5132';
-            resultadoDiv.textContent = 'Correto! Sempre devemos checar as informações em fontes confiáveis e agências de checagem antes de partilhar qualquer conteúdo.';
+            resultadoDiv.style.borderColor = '#badbcc';
+            resultadoDiv.textContent = '✅ Correto! O melhor caminho é conter o compartilhamento e verificar a veracidade em portais de notícias e agências de checagem de fatos.';
         } 
-        // Se selecionar qualquer uma das respostas erradas
         else {
             resultadoDiv.style.backgroundColor = '#f8d7da';
             resultadoDiv.style.color = '#842029';
-            resultadoDiv.textContent = 'Incorreto. Partilhar sem checar ou acreditar cegamente ajuda a espalhar desinformação. O comportamento digital correto é pesquisar em fontes confiáveis.';
+            resultadoDiv.style.borderColor = '#f5c2c7';
+            resultadoDiv.textContent = '❌ Incorreto. Compartilhar sem checar espalha desinformação. Lembre-se que hoje em dia mídias em vídeo também podem ser criadas por IA (Deepfakes).';
         }
     });
-
 });
