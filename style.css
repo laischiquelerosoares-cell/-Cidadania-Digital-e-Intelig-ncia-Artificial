@@ -1,4 +1,4 @@
-/* Variáveis de Cores (Paleta de cores moderna) */
+/* Variáveis de Cores do Tema Claro */
 :root {
     --bg-color: #f8f9fa;
     --card-bg: #ffffff;
@@ -8,7 +8,7 @@
     --border-color: #dee2e6;
 }
 
-/* Quando o HTML tiver o atributo data-theme="dark", estas cores serão aplicadas */
+/* Variáveis de Cores do Tema Escuro */
 [data-theme="dark"] {
     --bg-color: #121212;
     --card-bg: #1e1e1e;
@@ -18,9 +18,9 @@
     --border-color: #444444;
 }
 
-/* Configurações Gerais da Página */
+/* Estilização Base */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -29,7 +29,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Cabeçalho superior */
+/* Topo do Site */
 header {
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border-color);
@@ -37,17 +37,17 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
-h1 {
+header h1 {
     margin: 0;
     font-size: 1.8rem;
     color: var(--primary-color);
 }
 
-/* Botão de Alternar Modo Escuro */
+/* Botão de Alternar Tema */
 .btn-toggle {
     background-color: var(--primary-color);
     color: white;
@@ -63,17 +63,18 @@ h1 {
     background-color: var(--primary-hover);
 }
 
-/* Conteúdo centralizado */
+/* Layout Principal */
 main {
-    max-width: 800px;
+    max-width: 840px;
     margin: 30px auto;
     padding: 0 20px;
+    box-sizing: border-box;
 }
 
-/* Blocos / Secções de conteúdo */
+/* Blocos de Conteúdo */
 section {
     background-color: var(--card-bg);
-    padding: 25px;
+    padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     margin-bottom: 25px;
@@ -87,17 +88,11 @@ h2 {
 }
 
 h3 {
-    margin-bottom: 5px;
-    color: var(--text-color);
+    margin: 20px 0 5px 0;
+    color: var(--primary-color);
 }
 
-p {
-    margin-top: 5px;
-    margin-bottom: 15px;
-    opacity: 0.9;
-}
-
-/* Estilização do Quiz (Formulário) */
+/* Correção Crítica do Formulário (Alinhamento Vertical) */
 fieldset {
     border: 1px solid var(--border-color);
     border-radius: 6px;
@@ -108,28 +103,29 @@ fieldset {
 legend {
     font-weight: bold;
     padding: 0 10px;
-    margin-bottom: 15px;
 }
 
-/* Alinha o rádio button ao texto na vertical e quebra linha para cada opção */
+/* Faz com que cada opção ocupe uma linha inteira e alinhe o botão de rádio perfeitamente */
 .option-container {
-    display: block; /* Garante que uma opção fique abaixo da outra */
-    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    margin: 15px 0;
     cursor: pointer;
 }
 
 .option-container input {
-    margin-right: 10px;
+    margin-right: 12px;
+    margin-top: 5px;
 }
 
-/* Botão Enviar / Verificar */
+/* Botão Verde de Validar */
 .btn-submit {
     background-color: #198754;
     color: white;
     border: none;
     padding: 12px 20px;
     font-size: 1rem;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     margin-top: 15px;
     width: 100%;
@@ -141,19 +137,20 @@ legend {
     background-color: #157347;
 }
 
-/* Caixa onde aparece o feedback do quiz */
+/* Caixa de Resultado (Inicia Oculta) */
 #resultado-quiz {
-    margin-top: 15px;
+    margin-top: 20px;
     font-weight: bold;
-    padding: 12px;
-    border-radius: 4px;
-    display: none; /* Começa escondido */
+    padding: 15px;
+    border-radius: 6px;
+    display: none;
+    border: 1px solid transparent;
 }
 
-/* Rodapé do Site */
+/* Rodapé */
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 30px 20px;
     font-size: 0.9rem;
     border-top: 1px solid var(--border-color);
     margin-top: 50px;
