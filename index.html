@@ -4,7 +4,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cidadania Digital - IA e Deepfakes</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================================================
+           1. ESTILOS VISUAIS (CSS)
+           ========================================================================== */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --primary-color: #0d6efd;
+            --primary-hover: #0b5ed7;
+            --border-color: #dee2e6;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --primary-color: #375a7f;
+            --primary-hover: #2b4764;
+            --border-color: #444444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .btn-toggle {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        main {
+            max-width: 840px;
+            margin: 30px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 20px 0 5px 0;
+            color: var(--primary-color);
+        }
+
+        /* Estilos do Quiz */
+        fieldset {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            background-color: var(--bg-color);
+        }
+
+        .option-container {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .option-container input {
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+
+        .btn-submit {
+            background-color: #198754;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        #resultado-quiz {
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            border: 1px solid transparent;
+        }
+
+        /* ==========================================
+           ESTILOS DO JOGO DA MEMÓRIA
+           ========================================== */
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .memory-card {
+            height: 80px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 5px;
+            user-select: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .memory-card.flipped {
+            background-color: #e2e3e5;
+            color: #333;
+        }
+
+        .memory-card.matched {
+            background-color: #198754;
+            color: white;
+            cursor: default;
+        }
+
+        #resultado-memoria {
+            text-align: center;
+            font-weight: bold;
+            color: #198754;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body>
 
@@ -62,6 +245,14 @@
 
             <div id="resultado-quiz"></div>
         </section>
+
+        <section>
+            <h2>Jogo da Memória: Termos Tecnológicos</h2>
+            <p>Encontre os pares correspondentes relacionados à segurança digital e Inteligência Artificial!</p>
+            
+            <div class="memory-game" id="grid-memoria"></div>
+            <div id="resultado-memoria"></div>
+        </section>
     </main>
 
     <footer>
@@ -69,6 +260,30 @@
         <p>Projeto integrado de Educação Digital e IA - Ensino Médio.</p>
     </footer>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Modo Escuro ---
+            const toggleBtn = document.getElementById('toggleTheme');
+            toggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    toggleBtn.textContent = 'Modo Escuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    toggleBtn.textContent = 'Modo Claro';
+                }
+            });
+
+            // --- Validação Certa do Quiz ---
+            const btnVerificar = document.getElementById('btnVerificar');
+            const resultadoDiv = document.getElementById('resultado-quiz');
+            
+            btnVerificar.addEventListener('click', () => {
+                const opcoes = document.getElementsByName('opcao');
+                let respostaSelecionada = null;
+
+                for (const opcao of opcoes) {
+                    if (opcao.checked) {
+                        respostaSelecionada = opcao.
