@@ -1,3 +1,6 @@
+/* ==========================================================================
+   PALETA DE CORES (Tema Claro por Padrão)
+   ========================================================================== */
 :root {
     --bg-color: #f8f9fa;
     --card-bg: #ffffff;
@@ -7,6 +10,9 @@
     --border-color: #dee2e6;
 }
 
+/* ==========================================================================
+   PALETA DE CORES (Tema Escuro)
+   ========================================================================== */
 [data-theme="dark"] {
     --bg-color: #121212;
     --card-bg: #1e1e1e;
@@ -16,6 +22,9 @@
     --border-color: #444444;
 }
 
+/* ==========================================================================
+   ESTRUTURA GERAL DO SITE
+   ========================================================================== */
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background-color: var(--bg-color);
@@ -31,117 +40,4 @@ header {
     border-bottom: 1px solid var(--border-color);
     padding: 20px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: var(--primary-color);
-}
-
-.btn-toggle {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-toggle:hover {
-    background-color: var(--primary-hover);
-}
-
-main {
-    max-width: 840px;
-    margin: 30px auto;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-section {
-    background-color: var(--card-bg);
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    margin-bottom: 25px;
-}
-
-h2 {
-    color: var(--primary-color);
-    margin-top: 0;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-h3 {
-    margin: 20px 0 5px 0;
-    color: var(--primary-color);
-}
-
-fieldset {
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 20px;
-    background-color: var(--bg-color);
-}
-
-legend {
-    font-weight: bold;
-    padding: 0 10px;
-}
-
-/* Alinha as opções verticalmente (Uma embaixo da outra) */
-.option-container {
-    display: flex;
-    align-items: flex-start;
-    margin: 15px 0;
-    cursor: pointer;
-}
-
-.option-container input {
-    margin-right: 12px;
-    margin-top: 5px;
-}
-
-.btn-submit {
-    background-color: #198754;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 15px;
-    width: 100%;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-submit:hover {
-    background-color: #157347;
-}
-
-#resultado-quiz {
-    margin-top: 20px;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 6px;
-    display: none;
-    border: 1px solid transparent;
-}
-
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border-color);
-    margin-top: 50px;
-    opacity: 0.7;
-}
+    justify-
