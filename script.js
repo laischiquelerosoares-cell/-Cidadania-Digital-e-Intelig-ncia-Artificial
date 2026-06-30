@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. FUNCIONALIDADE DO MODO ESCURO
+    // Controle do Modo Escuro
     const toggleBtn = document.getElementById('toggleTheme');
     
     toggleBtn.addEventListener('click', () => {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. FUNCIONALIDADE DE VALIDAÇÃO DO QUIZ
+    // Controle do Quiz
     const btnVerificar = document.getElementById('btnVerificar');
     const resultadoDiv = document.getElementById('resultado-quiz');
     
@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const opcoes = document.getElementsByName('opcao');
         let respostaSelecionada = null;
 
-        // Procura qual opção foi marcada
         for (const opcao of opcoes) {
             if (opcao.checked) {
                 respostaSelecionada = opcao.value;
@@ -31,27 +30,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Mostra a caixinha de feedback na tela
         resultadoDiv.style.display = 'block';
 
-        // Validações de resposta
         if (!respostaSelecionada) {
             resultadoDiv.style.backgroundColor = '#fff3cd';
             resultadoDiv.style.color = '#664d03';
             resultadoDiv.style.borderColor = '#ffecb5';
             resultadoDiv.textContent = '⚠️ Por favor, selecione uma opção antes de verificar!';
-        } 
-        else if (respostaSelecionada === 'correta') {
+        } else if (respostaSelecionada === 'correta') {
             resultadoDiv.style.backgroundColor = '#d1e7dd';
             resultadoDiv.style.color = '#0f5132';
             resultadoDiv.style.borderColor = '#badbcc';
-            resultadoDiv.textContent = '✅ Correto! O melhor caminho é conter o compartilhamento e verificar a veracidade em portais de notícias e agências de checagem de fatos.';
-        } 
-        else {
+            resultadoDiv.textContent = '✅ Correto! O melhor caminho é não compartilhar e verificar a veracidade em portais de notícias e agências de checagem confiáveis.';
+        } else {
             resultadoDiv.style.backgroundColor = '#f8d7da';
             resultadoDiv.style.color = '#842029';
             resultadoDiv.style.borderColor = '#f5c2c7';
-            resultadoDiv.textContent = '❌ Incorreto. Compartilhar sem checar espalha desinformação. Lembre-se que hoje em dia mídias em vídeo também podem ser criadas por IA (Deepfakes).';
+            resultadoDiv.textContent = '❌ Incorreto. Compartilhar sem checar espalha desinformação. Vídeos e áudios hoje em dia podem ser gerados facilmente por IA (Deepfakes).';
         }
     });
 });
