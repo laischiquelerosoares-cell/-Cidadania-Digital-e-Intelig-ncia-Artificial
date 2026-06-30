@@ -1,152 +1,111 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // ==========================================================================
-    // 1. CONTROLE DO MODO ESCURO
-    // ==========================================================================
-    const botoesTema = document.querySelectorAll('#toggleTheme');
-    
-    botoesTema.forEach(botao => {
-        botao.addEventListener('click', () => {
-            const temaAtual = document.documentElement.getAttribute('data-theme');
-            
-            if (temaAtual === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                botao.textContent = 'Modo Escuro';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                botao.textContent = 'Modo Claro';
-            }
-        });
+    // --- 1. LÓGICA DO MODO ESCURO ---
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+            themeToggle.textContent = 'Modo Escuro';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = 'Modo Claro';
+        }
     });
 
-    // ==========================================================================
-    // 2. VALIDAÇÃO DAS RESPOSTAS DO QUIZ
-    // ==========================================================================
+    // --- 2. LÓGICA DE VALIDAÇÃO DO QUIZ ---
     const btnVerificar = document.getElementById('btnVerificar');
-    const resultadoDiv = document.getElementById('resultado-quiz');
-    
-    if (btnVerificar && resultadoDiv) {
-        btnVerificar.addEventListener('click', () => {
-            const opcoes = document.getElementsByName('opcao');
-            let respostaSelecionada = null;
+    const quizFeedback = document.getElementById('quizFeedback');
 
-            // Identifica qual alternativa o usuário marcou
-            for (const opcao of opcoes) {
-                if (opcao.checked) {
-                    respostaSelecionada = opcao.value;
-                    break;
-                }
-            }
+    btnVerificar.addEventListener('click', () => {
+        const selectedOption = document.querySelector('input[name="quiz"]:checked');
+        
+        if (!selectedOption) {
+            alert('Por favor, selecione uma das alternativas antes de verificar!');
+            return;
+        }
 
-            // Torna a caixinha de resultado visível
-            resultadoDiv.style.display = 'block';
+        if (selectedOption.value === 'correta') {
+            quizFeedback.className = 'feedback-box success';
+            quizFeedback.innerHTML = '✓ Correto! O melhor caminho é não compartilhar e verificar a veracidade em portais de notícias e agências de checagem confiáveis.';
+        } else {
+            quizFeedback.className = 'feedback-box error';
+            quizFeedback.innerHTML = '✘ Incorreto. Compartilhar sem checar espalha boatos. Sempre verifique em fontes confiáveis antes de agir.';
+        }
+    });
 
-            // Aplica a cor e a mensagem correta baseada na escolha
-            if (!respostaSelecionada) {
-                resultadoDiv.style.backgroundColor = '#fff3cd';
-                resultadoDiv.style.color = '#664d03';
-                resultadoDiv.style.borderColor = '#ffecb5';
-                resultadoDiv.textContent = '⚠️ Por favor, selecione uma opção antes de verificar!';
-            } 
-            else if (respostaSelecionada === 'correta') {
-                resultadoDiv.style.backgroundColor = '#d1e7dd';
-                resultadoDiv.style.color = '#0f5132';
-                resultadoDiv.style.borderColor = '#badbcc';
-                resultadoDiv.textContent = '✅ Correto! O melhor caminho é não compartilhar e pesquisar o assunto em portais de notícias confiáveis e agências de checagem.';
-            } 
-            else {
-                resultadoDiv.style.backgroundColor = '#f8d7da';
-                resultadoDiv.style.color = '#842029';
-                resultadoDiv.style.borderColor = '#f5c2c7';
-                resultadoDiv.textContent = '❌ Incorreto. Compartilhar sem checar ajuda a espalhar desinformação. Lembre-se de que vídeos e áudios hoje em dia podem ser criados artificialmente por IA (Deepfakes).';
-            }
-        });
+    // --- 3. LÓGICA COMPLETA DO JOGO DA MEMÓRIA ---
+    // Lista de termos duplicados (total de 12 cartas = 6 pares)
+    const cardTerms = [
+        'Deepfake', 'Deepfake',
+        'Checagem', 'Checagem',
+        'Fato', 'Fato',
+        'IA', 'IA',
+        'Segurança', 'Segurança',
+        'Mídia', 'Mídia'
+    ];
+
+    let flippedCards = [];
+    let matchedPairs = 0;
+    const totalPairs = cardTerms.length / 2;
+    const gameGrid = document.getElementById('memoryGame');
+
+    // Algoritmo para embaralhar os termos aleatoriamente
+    cardTerms.sort(() => 0.5 - Math.random());
+
+    // Renderiza dinamicamente as cartas no HTML
+    cardTerms.forEach((term, index) => {
+        const cardElement = document.createElement('div');
+        cardElement.classList.add('memory-card');
+        cardElement.dataset.term = term;
+        cardElement.dataset.index = index;
+        cardElement.textContent = '?';
+        
+        cardElement.addEventListener('click', handleCardClick);
+        gameGrid.appendChild(cardElement);
+    });
+
+    function handleCardClick() {
+        // Evita cliques se já existirem 2 cartas viradas, ou se clicar na mesma carta/carta já combinada
+        if (flippedCards.length === 2) return;
+        if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
+
+        // Vira a carta selecionada
+        this.classList.add('flipped');
+        this.textContent = this.dataset.term;
+        flippedCards.push(this);
+
+        // Se duas cartas foram viradas, faz a verificação
+        if (flippedCards.length === 2) {
+            checkCardMatch();
+        }
     }
 
-    // ==========================================================================
-    // 3. LÓGICA DO JOGO DA MEMÓRIA
-    // ==========================================================================
-    const grid = document.getElementById('grid-memoria');
-    const msgMemoria = document.getElementById('msg-memoria');
-    
-    if (grid) {
-        // Lista de figuras das cartas (pares idênticos)
-        const cardsArray = ['🤖', '🤖', '🔒', '🔒', '📱', '📱', '💻', '💻', '🔍', '🔍', '🌐', '🌐', '📡', '📡', '💡', '💡'];
-        
-        // Função para embaralhar os itens aleatoriamente
-        cardsArray.sort(() => 0.5 - Math.random());
+    function checkCardMatch() {
+        const [card1, card2] = flippedCards;
 
-        let firstCard = null;
-        let secondCard = null;
-        let lockBoard = false;
-        let matchesFound = 0;
+        if (card1.dataset.term === card2.dataset.term) {
+            // Se formam um par válido
+            card1.classList.add('matched');
+            card2.classList.add('matched');
+            flippedCards = [];
+            matchedPairs++;
 
-        // Limpa o grid antes de gerar (evita duplicação caso recarregue)
-        grid.innerHTML = '';
-
-        // Cria e insere as cartas dentro do HTML dinamicamente
-        cardsArray.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.classList.add('memory-card');
-            card.dataset.name = item;
-            card.dataset.id = index;
-            card.textContent = '?';
-            card.addEventListener('click', flipCard);
-            grid.appendChild(card);
-        });
-
-        function flipCard() {
-            if (lockBoard) return;
-            if (this === firstCard) return;
-
-            this.classList.add('flipped');
-            this.textContent = this.dataset.name;
-
-            if (!firstCard) {
-                firstCard = this;
-                return;
+            // Condição de vitória do jogo
+            if (matchedPairs === totalPairs) {
+                setTimeout(() => {
+                    alert('Excelente! Você encontrou todos os pares de termos sobre Cidadania Digital!');
+                }, 400);
             }
-
-            secondCard = this;
-            checkForMatch();
-        }
-
-        function checkForMatch() {
-            const isMatch = firstCard.dataset.name === secondCard.dataset.name;
-            isMatch ? disableCards() : unflipCards();
-        }
-
-        function disableCards() {
-            firstCard.classList.add('matched');
-            secondCard.classList.add('matched');
-            
-            firstCard.removeEventListener('click', flipCard);
-            secondCard.removeEventListener('click', flipCard);
-            
-            matchesFound += 2;
-
-            // Se o usuário encontrar todos os 16 cards (8 pares)
-            if (matchesFound === cardsArray.length && msgMemoria) {
-                msgMemoria.style.display = 'block';
-            }
-
-            resetBoard();
-        }
-
-        function unflipCards() {
-            lockBoard = true;
+        } else {
+            // Se as cartas forem diferentes, desvira após 1 segundo
             setTimeout(() => {
-                firstCard.classList.remove('flipped');
-                secondCard.classList.remove('flipped');
-                firstCard.textContent = '?';
-                secondCard.textContent = '?';
-                resetBoard();
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                card1.textContent = '?';
+                card2.textContent = '?';
+                flippedCards = [];
             }, 1000);
-        }
-
-        function resetBoard() {
-            [firstCard, secondCard] = [null, null];
-            lockBoard = false;
         }
     }
 });
