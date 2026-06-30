@@ -81,6 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let lockBoard = false;
         let matchesFound = 0;
 
+        // Limpa o grid antes de gerar (evita duplicação caso recarregue)
+        grid.innerHTML = '';
+
         // Cria e insere as cartas dentro do HTML dinamicamente
         cardsArray.forEach((item, index) => {
             const card = document.createElement('div');
@@ -116,6 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
         function disableCards() {
             firstCard.classList.add('matched');
             secondCard.classList.add('matched');
+            
+            firstCard.removeEventListener('click', flipCard);
+            secondCard.removeEventListener('click', flipCard);
+            
             matchesFound += 2;
 
             // Se o usuário encontrar todos os 16 cards (8 pares)
