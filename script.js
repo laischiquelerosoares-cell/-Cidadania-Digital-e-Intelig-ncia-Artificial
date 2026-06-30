@@ -1,57 +1,61 @@
-/**
- * Script de Funcionalidades Interativas - Portal de Cidadania Digital
- * Desenvolvido em conformidade com as diretrizes do projeto de IA e Desinformação.
- */
-
-document.addEventListener("DOMContentLoaded", function() {
+// Aguarda que todo o HTML seja carregado antes de executar o script
+document.addEventListener('DOMContentLoaded', () => {
     
-    // --- FUNCIONALIDADE 1: ACESSIBILIDADE (MODO ESCURO) ---
-    const themeToggle = document.getElementById("theme-toggle");
+    // --- LÓGICA DO MODO ESCURO ---
+    const toggleBtn = document.getElementById('toggleTheme');
     
-    themeToggle.addEventListener("click", function() {
-        // Verifica o tema atual no atributo data-theme do elemento HTML raiz
-        const currentTheme = document.documentElement.getAttribute("data-theme");
+    toggleBtn.addEventListener('click', () => {
+        // Verifica se o tema atual já é escuro
+        const currentTheme = document.documentElement.getAttribute('data-theme');
         
-        let newTheme = "light";
-        if (currentTheme !== "dark") {
-            newTheme = "dark";
-            themeToggle.textContent = "Modo Claro";
+        if (currentTheme === 'dark') {
+            // Se for escuro, remove o atributo voltando ao modo claro
+            document.documentElement.removeAttribute('data-theme');
+            toggleBtn.textContent = 'Modo Escuro';
         } else {
-            themeToggle.textContent = "Modo Escuro";
+            // Se for claro, adiciona o atributo mudando para o modo escuro
+            document.documentElement.setAttribute('data-theme', 'dark');
+            toggleBtn.textContent = 'Modo Claro';
         }
-        
-        // Aplica o novo tema atualizando a propriedade do DOM
-        document.documentElement.setAttribute("data-theme", newTheme);
     });
 
-    // --- FUNCIONALIDADE 2: VALIDADOR DE RESPOSTAS DO QUIZ ---
-    const quizForm = document.getElementById("quiz-form");
-    const feedbackBox = document.getElementById("quiz-feedback");
 
-    quizForm.addEventListener("submit", function(event) {
-        // Previne o comportamento padrão do HTML de recarregar a página ao enviar o form
-        event.preventDefault();
+    // --- LÓGICA DE VALIDAÇÃO DO QUIZ ---
+    const btnVerificar = document.getElementById('btnVerificar');
+    
+    btnVerificar.addEventListener('click', () => {
+        const opcoes = document.getElementsByName('opcao');
+        let respostaSelecionada = null;
 
-        // Captura o input do tipo rádio que foi selecionado pelo usuário
-        const selectedOption = document.querySelector('input[name="quiz-answer"]:checked');
-        
-        if (!selectedOption) return; // Proteção caso o envio ocorra sem seleção
-
-        const userAnswer = selectedOption.value;
-        
-        // Limpa classes anteriores da caixa de feedback para evitar sobreposição visual
-        feedbackBox.className = "feedback-box";
-
-        // Processa as informações usando variáveis e altera a árvore do DOM textualmente
-        if (userAnswer === "correta") {
-            feedbackBox.textContent = "Parabéns! Você exerceu sua Cidadania Digital corretamente. Sempre cheque as fontes antes de espalhar qualquer informação.";
-            feedbackBox.classList.add("success");
-        } else {
-            feedbackBox.textContent = "Atenção! Compartilhar sem checar ou acreditar de imediato ajuda a propagar a desinformação automatizada por IA. Tente analisar com mais calma e criticidade.";
-            feedbackBox.classList.add("error");
+        // Procura qual das opções (radio buttons) foi marcada pelo utilizador
+        for (const opcao of opcoes) {
+            if (opcao.checked) {
+                respostaSelecionada = opcao.value;
+                break;
+            }
         }
 
-        // Torna a div de feedback visível removendo a classe utility 'hidden'
-        feedbackBox.classList.remove("hidden");
+        const resultadoDiv = document.getElementById('resultado-quiz');
+        resultadoDiv.style.display = 'block'; // Torna a caixa de resultado visível
+
+        // Se o utilizador clicar sem selecionar nada
+        if (!respostaSelecionada) {
+            resultadoDiv.style.backgroundColor = '#fff3cd';
+            resultadoDiv.style.color = '#664d03';
+            resultadoDiv.textContent = 'Por favor, selecione uma opção antes de verificar!';
+        } 
+        // Se selecionar a opção correta
+        else if (respostaSelecionada === 'correta') {
+            resultadoDiv.style.backgroundColor = '#d1e7dd';
+            resultadoDiv.style.color = '#0f5132';
+            resultadoDiv.textContent = 'Correto! Sempre devemos checar as informações em fontes confiáveis e agências de checagem antes de partilhar qualquer conteúdo.';
+        } 
+        // Se selecionar qualquer uma das respostas erradas
+        else {
+            resultadoDiv.style.backgroundColor = '#f8d7da';
+            resultadoDiv.style.color = '#842029';
+            resultadoDiv.textContent = 'Incorreto. Partilhar sem checar ou acreditar cegamente ajuda a espalhar desinformação. O comportamento digital correto é pesquisar em fontes confiáveis.';
+        }
     });
+
 });
